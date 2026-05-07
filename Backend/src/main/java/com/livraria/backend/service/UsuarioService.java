@@ -13,4 +13,12 @@ public class UsuarioService {
     public Usuario salvar(Usuario usuario){
         return repository.save(usuario);
     }
+    public Usuario autenticar(String email, String senha){
+        Usuario usuario = repository.findByEmail(email).orElseThrow(()-> new RuntimeException("Usuario não encontrado"));
+        if (!usuario.getSenha().equals(senha)){
+            throw new RuntimeException("Senha incorreta!");
+        }
+        return usuario;
+
+    }
 }

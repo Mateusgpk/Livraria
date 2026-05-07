@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@CrossOrigin(origins = "https://localhost:5173")
+@CrossOrigin(origins = "http://localhost:5173")
 public class UsuarioController {
     @Autowired
     private UsuarioService service;
@@ -19,5 +19,14 @@ public class UsuarioController {
     public ResponseEntity<Usuario> registrar(@RequestBody Usuario usuario){
         Usuario novoUsuario= service.salvar(usuario);
         return new ResponseEntity<>(novoUsuario, HttpStatus.CREATED);
+    }
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Usuario loginData){
+        try {
+            Usuario usuario = service.autenticar(loginData.getEmail(),loginData.getSenha());
+            return ResponseEntity.ok(usuario);
+        } catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
     }
 }
