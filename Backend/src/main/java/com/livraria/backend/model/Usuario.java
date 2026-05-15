@@ -1,5 +1,6 @@
 package com.livraria.backend.model;
 
+import com.livraria.backend.model.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,6 +17,17 @@ public class Usuario {
 
     @Column(nullable = false)
     private String senha;
+
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
 
     private String nome;
 
