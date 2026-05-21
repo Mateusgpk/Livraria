@@ -1,4 +1,4 @@
-import axios from "axios";
+import {loginUser} from "../services/authservice";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 export default function Login() {
@@ -10,7 +10,7 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:8080/api/usuarios/login", usuario);
+            const response = await loginUser(usuario);
             console.log(response.data);
             alert("Login bem-sucedido!");
             if(response.status === 200){
@@ -18,7 +18,7 @@ export default function Login() {
             }
         }catch (error) {
             console.error("Erro ao fazer login:", error);
-            alert("Falha no login."+(error.response ? " " + error.response.data : ""));
+            alert("Falha no login."+(error ? " " + error : ""));
         }
     };
 

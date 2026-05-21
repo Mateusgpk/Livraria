@@ -4,11 +4,14 @@ import com.livraria.backend.model.Usuario;
 import com.livraria.backend.model.enums.UserRole;
 import com.livraria.backend.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UsuarioService {
+public class UsuarioService implements UserDetailsService {
     @Autowired
     private UsuarioRepository repository;
 
@@ -21,13 +24,9 @@ public class UsuarioService {
         usuario.setSenha(passwordCrip);
         return repository.save(usuario);
     }
-    public Usuario autenticar(String email, String senha){
-        Usuario usuario = repository.findByEmail(email).orElseThrow(()-> new RuntimeException("Usuario não encontrado"));
-        if (!passwordEncoder.matches(senha,usuario.getSenha())){
-            throw new RuntimeException("Senha incorreta!");
-        }
-        return usuario;
-
-
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return repository.findByEmail(email)
+                .orElseThrow(()-> new UsernameNotFoundException("Usuário não encontrado com email:" + email));
     }
 }

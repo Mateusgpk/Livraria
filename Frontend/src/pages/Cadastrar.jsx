@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import {registerUser} from "../services/authservice";
 import { useState } from "react";
 export default function Cadastrar() {
 
@@ -12,7 +12,7 @@ export default function Cadastrar() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const response = await axios.post("http://localhost:8080/api/usuarios/registrar", usuario);
+        const response = await registerUser(usuario);
         console.log(response.data);
         alert("Usuário cadastrado com sucesso!");
     }catch (error){
