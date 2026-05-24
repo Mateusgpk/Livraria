@@ -7,9 +7,4 @@ export const registerUser = (userData) => {
   data: userData});
 };
 
-export const loginUser =  (credentials) => {
-    return  request({
-  endpoint: "/api/usuarios/login",
-  method: "POST",
-  data: credentials});
-}
+

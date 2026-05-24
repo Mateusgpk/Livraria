@@ -59,7 +59,8 @@ public class Usuario implements UserDetails {
         return true;
     }
 
-    @Override boolean isEnabled(){
+    @Override
+    public boolean isEnabled(){
         return true;
     }
 

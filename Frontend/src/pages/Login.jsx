@@ -1,7 +1,8 @@
-import {loginUser} from "../services/authservice";
-import { useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 export default function Login() {
+    const { login } = useContext(AuthContext);
     const [usuario, setUsuario] = useState( {
         email: "",
         senha: ""
@@ -10,7 +11,7 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await loginUser(usuario);
+            const response = await login(usuario);
             console.log(response.data);
             alert("Login bem-sucedido!");
             if(response.status === 200){
@@ -18,7 +19,7 @@ export default function Login() {
             }
         }catch (error) {
             console.error("Erro ao fazer login:", error);
-            alert("Falha no login."+(error ? " " + error : ""));
+            alert("Falha no login.");
         }
     };
 
