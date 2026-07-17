@@ -11,13 +11,13 @@ import java.util.List;
 public class Livro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String titulo;
 
     @ManyToOne
-    @JoinColumn(name="editora")
+    @JoinColumn(name="editora_id")
     private Editora editora;
 
-    @OneToMany(mappedBy = "livro")
+    @OneToMany(mappedBy = "livro",cascade = CascadeType.ALL)
     private List<Exemplar> exemplares;
 }
